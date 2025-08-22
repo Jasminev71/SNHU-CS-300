@@ -1,3 +1,13 @@
 # SNHU-CS-300
 
-readme secotiom
+Reflection 
+  For these two projects, I built an advising tool that loads a CSV of courses and prerequisites, prints the full course list in order (A-Z), and lets the user look up an individual course with its prerequisites. The purpose was to practice choosing the proper data structure for the job and to write code that is easy to run, test, and extend. Thinking like an advisor helped frame the problem: they need fast lookups by course ID and a clean list view for planning.
+  I modeled each course with an ID, a title, and a list of prerequisite IDs. I compared three structures while designing the solution: a vector, a binary search tree, and a hash table. A vector is simple and memory-friendly, but lookups are linear, and printing A to Z requires a sort. A BST gives average log-time insert and search, and can print in order by walking the tree, but it can degrade to linear time when unbalanced. A hash table offers a constant insert and lookup on average, which aligns with the “show me this course now” use case that we were wanting. I chose the hash table, then flattened it to a list and did a single sort when the user asks for the A to Z listing.
+
+There were a couple of roadblocks I encountered, such as keeping everything in one C++ file and not adding more than that. In hindsight, this project was meant to be kept simple, and I was able to adapt and add everything into one file.
+
+This work pushed me to separate concerns and keep functions small and focused. One function loads data, another validates it, one prints the list, and another prints a single course. Clear messages guide the user when input is missing or malformed. The structure makes extension straightforward; add CSV, look up the desired class, and see if the class has any prerequisites. 
+
+From a performance and memory perspective, the differences among the structures are meaningful even on a small dataset. A vector keeps memory overhead low but pays a linear cost on lookups and needs an n log n sort. A BST introduces pointer overhead yet prints in order naturally and usually keeps searches near log time, though worst case can still be linear. The hash table adds bucket and chaining overhead, but it delivers constant-time lookups on average, which is precisely what the advising queries need. That balance of speed for the common operation with a simple one-time sort for the list convinced me to use the hash table for Project Two.
+
+Overall, these projects improved the way I design and write programs. I think earlier about how the data will be used, I validate inputs after loading instead of letting insufficient data leak into the rest of the program, and I write with maintainability in mind so new features can be added without rewriting core logic.
